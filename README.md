@@ -10,8 +10,5 @@ Chủ đề: Xây dựng website quản lý nhân viên của cửa hàng thời
 * Lưu Thị Ánh Nguyệt
 * Hoàng Thị Cúc
 
-
-
 ## Báo cáo
-* [Phiếu báo cáo học tập](#)
 * [Báo cáo thực nghiệm](#)
