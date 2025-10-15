@@ -5,7 +5,7 @@ Học Phần: Đồ Án Chuyên Ngành
 Chủ đề: Xây dựng website quản lý nhân viên của cửa hàng thời trang Hichi 
 
 
-## Nhóm sinh viên thực hiện
+## Nhóm sinh viên thực hiện:
 
 * Lưu Thị Ánh Nguyệt
 * Hoàng Thị Cúc
