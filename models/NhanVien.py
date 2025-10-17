@@ -96,3 +96,21 @@ class NhanVien:
             return False
         finally:
             conn.close()
+    @staticmethod
+    def lay_theo_email(email):
+        """
+        Lấy nhân viên theo email.
+        Trả về đối tượng NhanVien hoặc None nếu không tìm thấy.
+        """
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT ma_nhan_vien, ho_ten, so_dien_thoai, dia_chi, gioi_tinh, email, ngay_sinh
+            FROM NhanVien
+            WHERE email = ?
+        ''', (email,))
+        record = cursor.fetchone()
+        conn.close()
+        if record:
+            return NhanVien(*record)
+        return None

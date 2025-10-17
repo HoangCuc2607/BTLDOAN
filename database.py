@@ -7,7 +7,7 @@ def tao_co_so_du_lieu():
     # Bật kiểm tra khóa ngoại
     cursor.execute('PRAGMA foreign_keys = ON;')
 
-    # Tạo bảng NhanVien
+    # Bảng NhanVien
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS NhanVien (
         ma_nhan_vien INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,13 +20,41 @@ def tao_co_so_du_lieu():
     )
     ''')
 
-    # Tạo bảng DiemDanh
+    # Bảng DiemDanh
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS DiemDanh (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nhanvien_id INTEGER NOT NULL,
         ngay_diem_danh DATE NOT NULL,
-        trang_thai TEXT CHECK(trang_thai IN ('Đã điểm danh', 'Chưa điểm danh', 'Đến muộn')),
+        ca_sang TEXT CHECK(ca_sang IN ('Đã điểm danh', 'Đến muộn', 'Chưa điểm danh')) DEFAULT NULL,
+        ca_chieu TEXT CHECK(ca_chieu IN ('Đã điểm danh', 'Đến muộn', 'Chưa điểm danh')) DEFAULT NULL,
+        ca_toi TEXT CHECK(ca_toi IN ('Đã điểm danh', 'Đến muộn', 'Chưa điểm danh')) DEFAULT NULL,
+        FOREIGN KEY (nhanvien_id) REFERENCES NhanVien(ma_nhan_vien) ON DELETE CASCADE
+    );
+    ''')
+
+    # Bảng ChiaCa: lưu thông tin ngày và giờ từng ca
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS ChiaCa (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ngay DATE NOT NULL,
+        gio_bat_dau_ca_sang TIME,
+        gio_ket_thuc_ca_sang TIME,
+        gio_bat_dau_ca_chieu TIME,
+        gio_ket_thuc_ca_chieu TIME,
+        gio_bat_dau_ca_toi TIME,
+        gio_ket_thuc_ca_toi TIME
+    )
+    ''')
+
+    # Bảng trung gian ChiaCaNhanVien: nhiều-nhiều với cột ca
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS ChiaCaNhanVien (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        chia_ca_id INTEGER NOT NULL,
+        nhanvien_id INTEGER NOT NULL,
+        ca TEXT CHECK(ca IN ('Sáng','Chiều','Tối')) NOT NULL,
+        FOREIGN KEY (chia_ca_id) REFERENCES ChiaCa(id) ON DELETE CASCADE,
         FOREIGN KEY (nhanvien_id) REFERENCES NhanVien(ma_nhan_vien) ON DELETE CASCADE
     )
     ''')
